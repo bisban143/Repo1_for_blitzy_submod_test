@@ -1,22 +1,22 @@
-# Hello World — Java 21
+# Hello World — Java 18
 
-A Hello World project that deliberately uses **Java 21** language features, making it incompatible with Java 11.
+A Hello World project that deliberately uses **Java 18** language features, making it incompatible with Java 11 or Java 21+.
 
-## Why it won't run on Java 11
+## Why it's Java 18 ONLY
 
-Three Java 21 features are used — all of which fail to compile on Java 11:
+Three Java 18-compatible features are used — all of which fail to compile on Java 11:
 
 | Feature | Introduced |
 |---|---|
 | [Records](https://openjdk.org/jeps/395) | Java 16 (JEP 395) |
 | [Text Blocks](https://openjdk.org/jeps/378) | Java 15 (JEP 378) |
-| [Pattern Matching for Switch](https://openjdk.org/jeps/441) | Java 21 (JEP 441) |
+| [Switch Expressions](https://openjdk.org/jeps/361) | Java 14 (JEP 361) |
 
-The `maven-enforcer-plugin` also hard-fails the build if the JDK is below 21.
+The `maven-enforcer-plugin` enforces Java 18 ONLY (rejects both older and newer versions).
 
 ## Requirements
 
-- **Java 21+** (e.g. [Eclipse Temurin](https://adoptium.net/))
+- **Java 18 ONLY** (e.g. [Eclipse Temurin 18](https://adoptium.net/))
 - **Maven 3.9+**
 
 ## Build & Run
@@ -33,14 +33,14 @@ java -jar target/hello-world.jar
 
 ```
 ╔══════════════════════════════════╗
-║   Hello World — Java 21 Edition  ║
+║   Hello World — Java 18 Edition  ║
 ╚══════════════════════════════════╝
 🇬🇧  Hello, World!
 🇪🇸  ¡Hola, Mundo!
 🇯🇵  こんにちは、世界！
 🇧🇷  Olá, Mundo!
 
-Running on: 21.0.x+...
+Running on: 18.0.x+...
 ```
 
 ## Project Structure
