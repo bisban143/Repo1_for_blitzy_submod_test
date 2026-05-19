@@ -1,0 +1,45 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.example:hello-world-java >--------------------
+[INFO] Building Hello World — Java 11 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ hello-world-java ---
+[INFO] 
+[INFO] --- enforcer:3.4.1:enforce (enforce-java) @ hello-world-java ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- resources:3.4.0:resources (default-resources) @ hello-world-java ---
+[INFO] skip non existing resourceDirectory /home/runner/work/Repo1_for_blitzy_submod_test/Repo1_for_blitzy_submod_test/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.12.1:compile (default-compile) @ hello-world-java ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 1 source file with javac [debug release 11] to target/classes
+[INFO] 
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ hello-world-java ---
+[INFO] skip non existing resourceDirectory /home/runner/work/Repo1_for_blitzy_submod_test/Repo1_for_blitzy_submod_test/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.12.1:testCompile (default-testCompile) @ hello-world-java ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug release 11] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.2.5:test (default-test) @ hello-world-java ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.HelloWorldFeatureTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.079 s -- in com.example.HelloWorldFeatureTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.476 s
+[INFO] Finished at: 2026-05-19T07:46:48Z
+[INFO] ------------------------------------------------------------------------
