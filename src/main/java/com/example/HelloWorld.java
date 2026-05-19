@@ -1,46 +1,38 @@
 package com.example;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 /**
- * HelloWorld — compatible with Java 11+.
+ * HelloWorld — requires Java 21+.
  *
- * Uses only features available in Java 11:
- *   • Regular classes instead of records
- *   • String concatenation instead of text blocks
- *   • Traditional switch/if-else instead of pattern matching
+ * Uses three language features unavailable in Java 11:
+ *   • Records          (Java 16, JEP 395)
+ *   • Text blocks      (Java 15, JEP 378)
+ *   • Pattern-matching switch expressions (Java 21, JEP 441)
  */
 public class HelloWorld {
 
-    /** A simple class — compatible with Java 11+. */
-    static class Greeting {
-        private final String language;
-        private final String message;
-
-        public Greeting(String language, String message) {
-            this.language = language;
-            this.message = message;
-        }
-
-        public String getLanguage() {
-            return language;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-    }
+    /** A simple record — sealed data carrier, Java 16+. */
+    record Greeting(String language, String message) {}
 
     public static void main(String[] args) {
 
-        // String concatenation — Java 11 compatible
-        String banner = "\n" +
-                "╔══════════════════════════════════╗\n" +
-                "║   Hello World — Java 11 Edition  ║\n" +
-                "╚══════════════════════════════════╝\n";
+        // Text block — Java 15+
+        String banner = """
+                ╔══════════════════════════════════╗
+                ║   Hello World — Java 21 Edition  ║
+                ╚══════════════════════════════════╝
+                """;
 
         System.out.print(banner);
 
-        // Traditional array and loop — Java 11 compatible
-        Greeting[] greetings = new Greeting[]{
+        // Pattern-matching switch expression — Java 21+
+        var greetings = new Greeting[]{
             new Greeting("English",    "Hello, World!"),
             new Greeting("Spanish",    "¡Hola, Mundo!"),
             new Greeting("Japanese",   "こんにちは、世界！"),
@@ -48,27 +40,56 @@ public class HelloWorld {
         };
 
         for (Greeting g : greetings) {
-            String line;
-            switch (g.getLanguage()) {
-                case "English":
-                    line = "🇬🇧  " + g.getMessage();
-                    break;
-                case "Spanish":
-                    line = "🇪🇸  " + g.getMessage();
-                    break;
-                case "Japanese":
-                    line = "🇯🇵  " + g.getMessage();
-                    break;
-                case "Portuguese":
-                    line = "🇧🇷  " + g.getMessage();
-                    break;
-                default:
-                    line = "🌍  " + g.getMessage();
-                    break;
-            }
+            String line = switch (g.language()) {
+                case "English"    -> "🇬🇧  " + g.message();
+                case "Spanish"    -> "🇪🇸  " + g.message();
+                case "Japanese"   -> "🇯🇵  " + g.message();
+                case "Portuguese" -> "🇧🇷  " + g.message();
+                default           -> "🌍  " + g.message();
+            };
             System.out.println(line);
         }
 
+        // NEW: print host, working directory, timezone, date, and time
+        printRuntimeContext();
+
         System.out.println("\nRunning on: " + Runtime.version());
+    }
+
+    /**
+     * Prints the host machine's identifier (hostname), its filesystem
+     * context (working directory), and the current timezone, date, and
+     * time to standard output.
+     *
+     * <p>Output line prefixes are kept identical to the Java 11 and Python
+     * sibling implementations so the captured screenshots are visually
+     * comparable across submodules (AAP §0.6.2.1 — Submodule Parity Rule).
+     *
+     * <p>The InetAddress.getLocalHost() call is wrapped in a defensive
+     * try/catch because UnknownHostException is a checked exception and
+     * can be raised on extremely minimal containers without a populated
+     * /etc/hostname; in that case the host falls back to the literal
+     * string "unknown" so the Host: line is still emitted.
+     */
+    private static void printRuntimeContext() {
+        String hostname;
+        try {
+            hostname = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            hostname = "unknown";
+        }
+
+        // Use Java 21 local-type inference (`var`), consistent with the
+        // existing `var greetings = ...` line in main() above.
+        var cwd = System.getProperty("user.dir");
+        var zone = ZoneId.systemDefault();
+        var date = LocalDate.now(zone);
+        var time = LocalTime.now(zone);
+
+        System.out.println("Host: " + hostname);
+        System.out.println("Working directory: " + cwd);
+        System.out.println("Timezone: " + zone.getId());
+        System.out.println("Date: " + date.format(DateTimeFormatter.ISO_LOCAL_DATE));
+        System.out.println("Time: " + time.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
     }
 }
