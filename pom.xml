@@ -23,7 +23,62 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <!--
+            JUnit 5 (Jupiter) test framework — scoped to `test` only so that
+            no third-party code is bundled into the runtime JAR produced by
+            the maven-jar-plugin, preserving the standard-library-only
+            posture of the application runtime (AAP §0.3.1.1, §0.6.2.4).
+
+            The split-artifact model requires BOTH artifacts:
+              * junit-jupiter-api    — annotations (@Test, @BeforeEach, ...)
+                                       and assertion APIs used by test code.
+              * junit-jupiter-engine — JUnit Platform engine that Surefire
+                                       delegates to for actual execution.
+            Omitting the engine would cause Surefire to report
+            "No tests found" because no platform engine would be on the
+            test classpath.
+
+            Version 5.10.2 is identical to the version used in the sibling
+            repo1-java21 submodule, ensuring cross-submodule test-tier
+            parity. JUnit 5.10.x supports Java 8+, comfortably within the
+            Java 11 baseline declared in <properties>.
+        -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
     <build>
+        <!--
+            Produce target/hello-world.jar regardless of which plugin packages
+            the artifact. Declaring <finalName> at the <build> level (instead
+            of inside the maven-jar-plugin <configuration> block) avoids the
+            Maven 3.9+ warning
+              [WARNING] Parameter 'finalName' is read-only, must not be used in configuration
+            emitted by maven-jar-plugin 3.3.0 when <finalName> is set inside
+            the plugin's own configuration. The build-level setting is the
+            canonical, plugin-version-stable location for this property.
+        -->
+        <finalName>hello-world</finalName>
+
+        <!--
+            User-mandated test root override (AAP §0.6.2.2).
+            The user's explicit instruction "Test code should be organized
+            in test/ folder" supersedes Maven's default convention of
+            `src/test/java`. Resolved by Maven as `${basedir}/test/java`.
+        -->
+        <testSourceDirectory>test/java</testSourceDirectory>
+
         <plugins>
 
             <!-- Enforce minimum Java version at build time -->
@@ -47,7 +102,7 @@
                 </executions>
             </plugin>
 
-            <!-- Compile with --release 21 -->
+            <!-- Compile with release 11 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -57,7 +112,15 @@
                 </configuration>
             </plugin>
 
-            <!-- Package as executable JAR -->
+            <!--
+                Package as executable JAR.
+                The output filename is controlled by <build><finalName> above;
+                this plugin only contributes the main-class manifest entry,
+                which keeps the configuration free of the
+                "Parameter 'finalName' is read-only" warning emitted by
+                maven-jar-plugin 3.3.0 when <finalName> appears inside the
+                plugin's own configuration.
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -68,8 +131,23 @@
                             <mainClass>com.example.HelloWorld</mainClass>
                         </manifest>
                     </archive>
-                    <finalName>hello-world</finalName>
                 </configuration>
+            </plugin>
+
+            <!--
+                Run JUnit 5 tests during the `test` phase (AAP §0.3.1.1,
+                §0.6.2.6). Surefire 3.2.5 natively discovers JUnit 5 tests
+                via the JUnit Platform when junit-jupiter-engine is on the
+                test classpath, so no extra <configuration> is required.
+                Surefire's default include patterns (`**/*Test.java`,
+                `**/Test*.java`, `**/*Tests.java`) match the test class
+                `HelloWorldFeatureTest.java`, so no <includes> override
+                is required either.
+            -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
             </plugin>
 
         </plugins>
