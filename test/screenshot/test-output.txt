@@ -1,7 +1,7 @@
 [INFO] Scanning for projects...
 [INFO] 
 [INFO] --------------------< com.example:hello-world-java >--------------------
-[INFO] Building Hello World — Java 21 1.0.0
+[INFO] Building Hello World — Java 11 1.0.0
 [INFO]   from pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
@@ -15,7 +15,7 @@
 [INFO] 
 [INFO] --- compiler:3.12.1:compile (default-compile) @ hello-world-java ---
 [INFO] Recompiling the module because of changed source code.
-[INFO] Compiling 1 source file with javac [debug release 21] to target/classes
+[INFO] Compiling 1 source file with javac [debug release 11] to target/classes
 [INFO] 
 [INFO] --- resources:3.4.0:testResources (default-testResources) @ hello-world-java ---
 [INFO] skip non existing resourceDirectory /home/runner/work/Repo1_for_blitzy_submod_test/Repo1_for_blitzy_submod_test/src/test/resources
@@ -28,6 +28,6 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.873 s
-[INFO] Finished at: 2026-05-19T02:27:46Z
+[INFO] Total time:  2.435 s
+[INFO] Finished at: 2026-05-19T03:12:41Z
 [INFO] ------------------------------------------------------------------------
