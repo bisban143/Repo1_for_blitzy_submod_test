@@ -112,3 +112,10 @@ Test and run output captures are persisted under `test/screenshot/`:
 - `test/screenshot/test-output.txt` — captured stdout from `mvn test`
 
 These files are automatically populated and committed back by the GitHub Actions workflow (`.github/workflows/build.yml`) on each green CI run, and are also published as a downloadable workflow artifact (`screenshot-evidence-java11`).
+
+### CI Runtime vs. Source Language Level (per ADR-003)
+
+This submodule's GitHub Actions workflow (`.github/workflows/build.yml`) **intentionally uses JDK 21** via `actions/setup-java@v4` with `java-version: '21'`, while the POM compiles the source code at the **Java 11 language level** via `<release>${java.version}</release>` (where `java.version` is `11`). This is a deliberate architectural choice (ADR-003 — byte-identical Java workflows across the `repo1-java21` and `repo1-java11` submodules) and has two practical consequences:
+
+1. **Source compatibility is enforced at the compiler level, not the JVM level.** The compiler emits Java 11 bytecode (`javac --release 11`), and the `maven-enforcer-plugin` rule `requireJavaVersion: [11,)` permits any JDK 11 or later. The Java 11 language constraints (no records, no text blocks, no `var`, no pattern-matching switch) are honored by the source code itself, not by the build environment.
+2. **CI-captured evidence (`test/screenshot/run-output.txt`) shows a Java 21 runtime version on the final `Running on:` line** (e.g., `Running on: 21.0.x+...`) even though the binary is Java 11-compatible. The banner (`Hello World — Java 11 Edition`), working directory (under `…/Repo1_for_blitzy_submod_test`), and bytecode major version (55, not 65) all unambiguously identify this submodule as Java 11. To produce evidence with a Java 11 `Running on:` line, run `mvn package && java -jar target/hello-world.jar` locally under a JDK 11 installation.

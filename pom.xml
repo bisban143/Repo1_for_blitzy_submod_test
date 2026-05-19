@@ -60,6 +60,19 @@
 
     <build>
         <!--
+            Produce target/hello-world.jar regardless of which plugin packages
+            the artifact. Declaring <finalName> at the <build> level (instead
+            of inside the maven-jar-plugin <configuration> block) avoids the
+            Maven 3.9+ warning
+              [WARNING] Parameter 'finalName' is read-only, must not be used in configuration
+            emitted by maven-jar-plugin 3.3.0 when <finalName> is set inside
+            the plugin's own configuration. The build-level setting is the
+            canonical, plugin-version-stable location for this property and
+            mirrors the convention used in the sibling repo1-java21 submodule.
+        -->
+        <finalName>hello-world</finalName>
+
+        <!--
             User-mandated test root override (AAP §0.6.2.2).
             The user's explicit instruction "Test code should be organized
             in test/ folder" supersedes Maven's default convention of
@@ -100,7 +113,15 @@
                 </configuration>
             </plugin>
 
-            <!-- Package as executable JAR -->
+            <!--
+                Package as executable JAR.
+                The output filename is controlled by <build><finalName> above;
+                this plugin only contributes the main-class manifest entry,
+                which keeps the configuration free of the
+                "Parameter 'finalName' is read-only" warning emitted by
+                maven-jar-plugin 3.3.0 when <finalName> appears inside the
+                plugin's own configuration.
+            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -111,7 +132,6 @@
                             <mainClass>com.example.HelloWorld</mainClass>
                         </manifest>
                     </archive>
-                    <finalName>hello-world</finalName>
                 </configuration>
             </plugin>
 
