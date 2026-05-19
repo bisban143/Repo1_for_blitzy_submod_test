@@ -25,7 +25,9 @@ jobs:
           cache: maven
 
       - name: Run unit tests with Maven
+        shell: bash
         run: |
+          set -o pipefail
           mkdir -p test/screenshot
           mvn --no-transfer-progress clean test 2>&1 | tee test/screenshot/test-output.txt
 
@@ -33,7 +35,11 @@ jobs:
         run: mvn --no-transfer-progress package -DskipTests=true
 
       - name: Run JAR and capture screenshot
-        run: java -jar target/hello-world.jar 2>&1 | tee test/screenshot/run-output.txt
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p test/screenshot
+          java -jar target/hello-world.jar 2>&1 | tee test/screenshot/run-output.txt
 
       - name: Upload screenshot evidence artifact
         if: always()
