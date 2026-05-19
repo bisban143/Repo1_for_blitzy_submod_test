@@ -1,29 +1,28 @@
 [INFO] Scanning for projects...
 [INFO] 
 [INFO] --------------------< com.example:hello-world-java >--------------------
-[INFO] Building Hello World — Java 21 1.0.0
+[INFO] Building Hello World — Java 11 1.0.0
 [INFO]   from pom.xml
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
 [INFO] --- clean:3.2.0:clean (default-clean) @ hello-world-java ---
-[INFO] Deleting /tmp/blitzy/parent-repo-with-submodules/blitzy-269ab3e9-c1b1-4918-b112-06baf6219fda_e389d8/repo1-java21/target
 [INFO] 
 [INFO] --- enforcer:3.4.1:enforce (enforce-java) @ hello-world-java ---
 [INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
 [INFO] 
-[INFO] --- resources:3.3.1:resources (default-resources) @ hello-world-java ---
-[INFO] skip non existing resourceDirectory /tmp/blitzy/parent-repo-with-submodules/blitzy-269ab3e9-c1b1-4918-b112-06baf6219fda_e389d8/repo1-java21/src/main/resources
+[INFO] --- resources:3.4.0:resources (default-resources) @ hello-world-java ---
+[INFO] skip non existing resourceDirectory /home/runner/work/Repo1_for_blitzy_submod_test/Repo1_for_blitzy_submod_test/src/main/resources
 [INFO] 
 [INFO] --- compiler:3.12.1:compile (default-compile) @ hello-world-java ---
 [INFO] Recompiling the module because of changed source code.
-[INFO] Compiling 1 source file with javac [debug release 21] to target/classes
+[INFO] Compiling 1 source file with javac [debug release 11] to target/classes
 [INFO] 
-[INFO] --- resources:3.3.1:testResources (default-testResources) @ hello-world-java ---
-[INFO] skip non existing resourceDirectory /tmp/blitzy/parent-repo-with-submodules/blitzy-269ab3e9-c1b1-4918-b112-06baf6219fda_e389d8/repo1-java21/src/test/resources
+[INFO] --- resources:3.4.0:testResources (default-testResources) @ hello-world-java ---
+[INFO] skip non existing resourceDirectory /home/runner/work/Repo1_for_blitzy_submod_test/Repo1_for_blitzy_submod_test/src/test/resources
 [INFO] 
 [INFO] --- compiler:3.12.1:testCompile (default-testCompile) @ hello-world-java ---
 [INFO] Recompiling the module because of changed dependency.
-[INFO] Compiling 1 source file with javac [debug release 21] to target/test-classes
+[INFO] Compiling 1 source file with javac [debug release 11] to target/test-classes
 [INFO] 
 [INFO] --- surefire:3.2.5:test (default-test) @ hello-world-java ---
 [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
@@ -32,7 +31,7 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running com.example.HelloWorldFeatureTest
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.049 s -- in com.example.HelloWorldFeatureTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.062 s -- in com.example.HelloWorldFeatureTest
 [INFO] 
 [INFO] Results:
 [INFO] 
@@ -41,6 +40,6 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  1.533 s
-[INFO] Finished at: 2026-05-19T04:08:14Z
+[INFO] Total time:  8.682 s
+[INFO] Finished at: 2026-05-19T04:26:33Z
 [INFO] ------------------------------------------------------------------------
