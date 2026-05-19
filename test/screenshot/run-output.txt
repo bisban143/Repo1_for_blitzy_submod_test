@@ -1,0 +1,14 @@
+╔══════════════════════════════════╗
+║   Hello World — Java 21 Edition  ║
+╚══════════════════════════════════╝
+🇬🇧  Hello, World!
+🇪🇸  ¡Hola, Mundo!
+🇯🇵  こんにちは、世界！
+🇧🇷  Olá, Mundo!
+Host: runnervmrw5os
+Working directory: /home/runner/work/Repo1_for_blitzy_submod_test/Repo1_for_blitzy_submod_test
+Timezone: Etc/UTC
+Date: 2026-05-19
+Time: 02:27:48
+
+Running on: 21.0.11+10-LTS
